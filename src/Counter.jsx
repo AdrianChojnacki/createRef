@@ -1,18 +1,20 @@
-import React, { PureComponent } from 'react';
+import React, { createRef, PureComponent } from 'react';
 
 class Counter extends PureComponent {
   state = {
     counter: 0,
   }
 
+  componentRef = createRef();
+
   render() {
     const { counter } = this.state;
 
     return (
-      <div>
+      <div ref={this.componentRef}>
         <p>Wartość licznika wynosi: {counter}</p>
         <button onClick={this.asyncIncreaseCounterValue}>
-          Pobier asynchroniczne dane
+          Pobierz asynchroniczne dane
         </button>
       </div>
     );
@@ -20,11 +22,13 @@ class Counter extends PureComponent {
 
   asyncIncreaseCounterValue = () => setTimeout(
     () => {
-      this.setState(prevState => ({
-        counter: prevState.counter + 1,
-      }));
+      if (this.componentRef.current) {
+        this.setState(prevState => ({
+          counter: prevState.counter + 1,
+        }));
+      }
     },
-    3000
+    1500
   );
 }
 
