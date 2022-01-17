@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import React, { createRef, PureComponent } from 'react';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+class App extends PureComponent {
+  textInput = createRef();
+  paragraphElement = createRef();
+
+  render() {
+    console.log(this.textInput);
+    return (
+      <div>
+        <input
+          ref={this.textInput}
+          type="text"
+        />
+        <p ref={this.paragraphElement}>
+          Hello
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        <button onClick={this.focusTextInput}>
+          Ustaw focus na input
+        </button>
+        <button onClick={this.addChar}>
+          Dodaj wykrzyknik
+        </button>
+      </div>
+    );
+  }
+
+  focusTextInput = () => this.textInput.current.focus();
+  addChar = () => this.paragraphElement.current.textContent += '!';
 }
 
 export default App;
